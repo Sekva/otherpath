@@ -57,7 +57,7 @@ public class NetherPortalHandler implements Listener {
             }
 
             event.getWorld().strikeLightningEffect(player.getLocation());
-            player.getInventory().addItem(NetherTome.getTome());
+            player.getInventory().addItem(new NetherTome());
             player.setHealth(2);
         }
 
