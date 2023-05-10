@@ -1,0 +1,11 @@
+#+TITLE:     OtherPath
+#+SUBTITLE:  Pra outra dimensão? Não vai não!
+#+AUTHOR:    Sekva
+#+EMAIL:     matheusmachado708@gmail.com
+#+DESCRIPTION: Plugin para servidor que EXIGE rituais em grupo pra criar portais
+#+OPTIONS:   H:4 num:nil toc:2 p:t
+
+* Introdução
+* Indo pro Nether
+* Indo pro End
+* Pro futuro
