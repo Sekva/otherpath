@@ -1,15 +1,32 @@
 package org.sekva.rituals;
 
-import java.util.List;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 public class NetherRitual {
+
+    private static final int RITUAL_NUMBER = 6;
+
+    private final static Vector[] playerDiffList = {
+        new Vector(7, 0, 6),
+        new Vector(7, 0, 3),
+        new Vector(7, 0, 0),
+        new Vector(7, 0, -3),
+        new Vector(7, 0, -6)
+    };
+
+    private final static Material[] playerItems  = {
+        Material.TOTEM_OF_UNDYING,
+        Material.SPONGE,
+        Material.SPORE_BLOSSOM,
+        Material.MUSIC_DISC_5,
+        Material.TOTEM_OF_UNDYING
+    };
     
     public static void tryStartRitual(Player player, Block baseBlock) {
 
@@ -22,46 +39,58 @@ public class NetherRitual {
         }
         
         World world = player.getWorld();
-        List<Player> players = world.getPlayers();
+        // TODO: chegar se tá no por do sol
         Location baseLocation = baseBlock.getLocation();
-
         Bukkit.getLogger().info("tudo ok, testando players");
-        
-        try {
-            checkPlayer1(baseLocation.clone(), players);
-            checkPlayer2(baseLocation.clone(), players);
-            checkPlayer3(baseLocation.clone(), players);
-            checkPlayer4(baseLocation.clone(), players);
-            checkPlayer5(baseLocation.clone(), players);
-            checkPlayer6(baseLocation.clone(), players);
-        } catch(Exception _e) {
-            _e.printStackTrace();
-            return;
+
+        for(int i = 0; i < RITUAL_NUMBER - 1; i++) {
+            Player assistPlayer = checkIfPlayerPosition(baseLocation.add(playerDiffList[i]), world);
+
+            if(assistPlayer == null) {
+                return;
+            }
+
+            if(!playerUsingGoldenArmor(assistPlayer) || !playerHandItem(assistPlayer, playerItems[i])) {
+                return;
+            }
+
+            Bukkit.getLogger().info("player " + i + " ok:" + assistPlayer.getDisplayName());
         }
-        
-        for(Player p: players) {
-            p.sendTitle("Um ritual vai começar", "Sub", 10, 70, 20);
+
+        for(Player p: world.getPlayers()) {
+            p.sendTitle("Um ritual vai começar", "E lá vamos nós", 10, 70, 20);
         }
 
         buildPortal(baseLocation.clone(), world);
     }
 
+    private static Player checkIfPlayerPosition(Location blockLocation, World world) {
+        if(blockLocation.getBlock().getType() != Material.BONE_BLOCK) {
+            return null;
+        }
 
-    private static void checkPlayer1(Location baseLocation, List<Player> players) throws Exception {
+        Location playerLocation = blockLocation.add(0, 1, 0);
+        for(Player p: world.getPlayers()){
+            if(p.getLocation().distance(playerLocation) < 1.5) {
+                return p;
+            }
+        }
 
-        // o player ta em cima de um bloco de diamante no lugar certo?
-        // o player ta de armadura completa de ouro?
-        // o player ta com o item certo na mao?
+        return null;
+    }
 
-        // throw new Exception();
+    private static boolean playerUsingGoldenArmor(Player player)    {
+        //TODO: fazer 
+        return false;
+    }
+
+    private static boolean playerHandItem(Player player, Material material) {
+        //TODO: fazer 
+        return false;
     }
     
-    private static void checkPlayer2(Location baseLocation, List<Player> players) throws Exception {}
-    private static void checkPlayer3(Location baseLocation, List<Player> players) throws Exception {}
-    private static void checkPlayer4(Location baseLocation, List<Player> players) throws Exception {}
-    private static void checkPlayer5(Location baseLocation, List<Player> players) throws Exception {}
-    private static void checkPlayer6(Location baseLocation, List<Player> players) throws Exception {}
-    
-    private static void buildPortal(Location baseLocation, World world) {}
+    private static void buildPortal(Location baseLocation, World world) {
+        //TODO: fazer
+    }
     
 }
